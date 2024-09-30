@@ -1,0 +1,27 @@
+debug: false # print debug log
+management.endpoints.web.exposure.include: "*" # actuator의 모든 enpoint 활성화
+
+logging:
+  level:
+    com.board.com.board.boardpractice: debug
+    org.springframework.web.servlet: debug # req, resp debug 활성화
+    org.hibernate.type.descriptor.sql.BasicBinder: trace # sql의 파라미터 ??을 보여줌
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/board
+    username: wlsgur073
+    password: password
+  jpa:
+    defer-datasource-initialization: true # 테스트용 데이터베이스 생성 시 default sql 실행문 활성화 (resources/data.sql)
+    hibernate.ddl-auto: create # entity 자동 생성
+    show-sql: true
+    properties: # hibernate 지원하지만 spring boot에서 자동 적용되지 않기에 작성 필요
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  sql.init.mode: always # resources/data.sql를 작동시키는 시점
+
+---
+#spring:
+#  config.activate.on-profile: test
+#  datasource.url: jdbc:h2:mem:testdb
