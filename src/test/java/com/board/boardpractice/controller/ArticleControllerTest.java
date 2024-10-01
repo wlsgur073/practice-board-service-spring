@@ -22,7 +22,6 @@ class ArticleControllerTest {
         this.mvc = mcv;
     }
 
-    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 정상 호출")
     @Test
     void givenNothing_whenRequestingArticlesView_thenReturnsArticlesView() throws Exception {
@@ -31,7 +30,7 @@ class ArticleControllerTest {
         //when & then
         mvc.perform(get("/articles"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML)) // charset이 UTF-8인 옵션 정도는 pass하도록 설정
                 .andExpect(view().name("articles/index")) // view를 resolving 할 html 파일 이름도 검사 가능
                 .andExpect(model().attributeExists("articles")); // model에 해당 key 데이터가 있는지 여부
     }
