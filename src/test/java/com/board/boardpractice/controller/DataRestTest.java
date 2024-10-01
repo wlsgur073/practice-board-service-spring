@@ -1,5 +1,6 @@
 package com.board.boardpractice.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //@WebMvcTest // slice test 라서 컨트롤러 외의 bean을 읽어오지 않는다.
+@Disabled("Spring Data REST 통합 테스트는 불필요하므로 제외시킴")
 @DisplayName("Data REST - API 테스트")
 @AutoConfigureMockMvc // MockMvc를 호출하기 위해서
 @SpringBootTest // 모든 bean을 호출하기 위한 통합 test로 설정 -> 대신 무거움
