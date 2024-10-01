@@ -20,6 +20,10 @@ spring:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
   sql.init.mode: always # resources/data.sql를 작동시키는 시점
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated # rest api 노출 전략 설정
 
 ---
 #spring:
