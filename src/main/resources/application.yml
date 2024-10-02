@@ -24,7 +24,7 @@ spring:
     rest:
       base-path: /api
       detection-strategy: annotated # rest api 노출 전략 설정
-
+  thymeleaf3.decoupled-logic: true # ThymeleafConfig class 참고
 ---
 #spring:
 #  config.activate.on-profile: test
