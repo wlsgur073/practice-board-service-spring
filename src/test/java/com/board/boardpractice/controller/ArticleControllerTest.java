@@ -1,10 +1,12 @@
 package com.board.boardpractice.controller;
 
+import com.board.boardpractice.config.SecurityConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -13,13 +15,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View Controller - Article")
+@Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class) // 해당 컨트롤러만 읽음 -> 가벼워짐
 class ArticleControllerTest {
 
     private final MockMvc mvc;
 
-    public ArticleControllerTest(@Autowired MockMvc mcv) { // test 패키지에서는 Autowired를 명시해줘야 함.
-        this.mvc = mcv;
+    public ArticleControllerTest(@Autowired MockMvc mvc) { // test 패키지에서는 Autowired를 명시해줘야 함.
+        this.mvc = mvc;
     }
 
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 정상 호출")
@@ -35,7 +38,6 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("articles")); // model에 해당 key 데이터가 있는지 여부
     }
 
-    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 상세 페이지 - 정상 호출")
     @Test
     void givenNothing_whenRequestingArticleView_thenReturnsArticleView() throws Exception {
