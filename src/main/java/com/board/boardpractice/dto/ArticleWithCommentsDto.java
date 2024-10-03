@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record ArticleWithCommentsDto(
+public record ArticleWithCommentsDto( // ArticleDto에서 코멘트를 가지고 있지 않기에 게시글과 함께 댓글 정보도 가지고 오는 dto 만듦
         Long id,
         UserAccountDto userAccountDto,
         Set<ArticleCommentDto> articleCommentDtos,
