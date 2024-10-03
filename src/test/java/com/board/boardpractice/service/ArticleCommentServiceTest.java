@@ -57,8 +57,4 @@ class ArticleCommentServiceTest {
         then(articleCommentRepository).should().save(any(ArticleComment.class));
     }
 
-    private ArticleComment createArticleComment() {
-        return ArticleComment.of()
-    }
-
 }
