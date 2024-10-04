@@ -23,7 +23,7 @@ public record ArticleDto(
         return new ArticleDto(id, userAccountDto, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
-    // entity를 dto로 만드는 방법
+    // mapper 코드를 별도로 분리해서 관리할수도 있다. 해당 프로젝트에서는 코드가 길지 않기에 dto에서 관리중..
     public static ArticleDto from(Article entity) {
         return new ArticleDto(
                 entity.getId(),

@@ -56,14 +56,14 @@ class ArticleServiceTest {
         SearchType searchType = SearchType.TITLE;
         String keyword = "title";
         Pageable pageable = Pageable.ofSize(20);
-        given(articleRepository.findByTitle(keyword, pageable)).willReturn(Page.empty());
+        given(articleRepository.findByTitleContaining(keyword, pageable)).willReturn(Page.empty());
 
         // When
         Page<ArticleDto> articles = sut.searchArticles(searchType, keyword, pageable);
 
         // Then
         assertThat(articles).isEmpty();
-        then(articleRepository).should().findByTitle(keyword, pageable);
+        then(articleRepository).should().findByTitleContaining(keyword, pageable);
     }
 
     @DisplayName("게시글을 조회하면, 게시글을 반환한다.")
@@ -117,22 +117,24 @@ class ArticleServiceTest {
         then(articleRepository).should().save(any(Article.class));
     }
 
-    @DisplayName("게시글의 수정 정보를 입력하면, 게시글을 수정한다.")
+    @DisplayName("없는 게시글의 수정 정보를 입력하면, 경고 로그를 찍고 아무 것도 하지 않는다.")
     @Test
-    void givenModifiedArticleInfo_whenUpdatingArticle_thenUpdatesArticle() {
+    void givenNonexistentArticleInfo_whenUpdatingArticle_thenLogsWarningAndDoesNothing() {
         // given
-        Article article = createArticle();
-        ArticleDto dto = createArticleDto();
-        given(articleRepository.getReferenceById(dto.id())).willReturn(article);
+
+        /*
+         * findById - 즉시 로딩(Eager Loading)
+         * getReferenceById - 지연 로딩(Lazy Loading)
+         * 동작은 같음.
+         * */
+        // getReferenceById안에 EntityNotFoundException이 들어가 있음.
+        ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "#springboot");
+        given(articleRepository.getReferenceById(dto.id())).willThrow(EntityNotFoundException.class);
 
         // when
         sut.updateArticle(dto);
 
         // then
-        assertThat(article)
-                .hasFieldOrPropertyWithValue("title", dto.title())
-                .hasFieldOrPropertyWithValue("content", dto.content())
-                .hasFieldOrPropertyWithValue("hashtag", dto.hashtag());
         then(articleRepository).should().getReferenceById(dto.id());
     }
 
