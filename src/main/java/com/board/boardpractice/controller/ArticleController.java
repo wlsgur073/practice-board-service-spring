@@ -38,7 +38,7 @@ public class ArticleController {
     public String articles(@PathVariable("articledId") Long articledId, ModelMap map) {
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticle(articledId));
         map.addAttribute("article", article);
-        map.addAttribute("articlesComments", article.articleCommentResponse());
+        map.addAttribute("articleComments", article.articleCommentResponse());
 
         return "articles/detail";
     }
