@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,7 +38,7 @@ class ArticleCommentServiceTest {
         // Given
         Long articleId = 1L;
         ArticleComment expected = createArticleComment("content");
-        given(articleCommentRepository.findAllById(Collections.singleton(articleId))).willReturn(List.of(expected));
+        given(articleCommentRepository.findByArticle_Id(articleId)).willReturn(List.of(expected));
 
         // When
         List<ArticleCommentDto> actual = sut.searchArticleComments(articleId);
@@ -48,7 +47,7 @@ class ArticleCommentServiceTest {
         assertThat(actual)
                 .hasSize(1)
                 .first().hasFieldOrPropertyWithValue("content", expected.getContent());
-        then(articleCommentRepository).should().findAllById(Collections.singleton(articleId));
+        then(articleCommentRepository).should().findByArticle_Id(articleId);
     }
 
     @DisplayName("댓글 정보를 입력하면, 댓글을 저장한다.")
@@ -63,7 +62,7 @@ class ArticleCommentServiceTest {
         sut.saveArticleComment(dto);
 
         // Then
-        then(articleCommentRepository).should().getReferenceById(dto.articleId());
+        then(articleRepository).should().getReferenceById(dto.articleId());
         then(articleCommentRepository).should().save(any(ArticleComment.class));
     }
 
