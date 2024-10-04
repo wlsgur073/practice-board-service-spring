@@ -19,6 +19,7 @@ spring:
     properties: # hibernate 지원하지만 spring boot에서 자동 적용되지 않기에 작성 필요
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
+    open-in-view: false # OSIV 참고
   sql.init.mode: always # resources/data.sql를 작동시키는 시점
   data:
     rest:
