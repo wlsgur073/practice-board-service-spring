@@ -4,10 +4,6 @@ insert into user_account (user_id, user_password, nickname, email, memo, created
 ('tester', 'asdf1234', 'tester', 'tester@mail.com', 'I am tester.', now(), 'tester', now(), 'tester')
 ;
 
-insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
-    ('tester2', 'asdf1234', 'tester2', 'tester2@mail.com', 'I am tester2.', now(), 'tester2', now(), 'tester2')
-;
-
 -- 123 게시글
 insert into article (user_account_id, title, content, hashtag, created_by, modified_by, created_at, modified_at) values
 (1, 'Quisque ut erat.', 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.
@@ -91,13 +87,13 @@ Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque
 In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.
 
 Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', '#teal', 'Burg', 'Saudra', '2022-01-09 16:49:14', '2021-01-30 05:24:22'),
-(2, 'Nulla justo.', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.
+(1, 'Nulla justo.', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.
 
 Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.
 
 Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', '#turquoise', 'Monah', 'Alexandro', '2021-08-25 08:42:32', '2021-06-24 17:50:44'),
 (1, 'Pellentesque viverra pede ac diam.', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '#fuscia', 'Tadeas', 'Lynnelle', '2021-04-16 16:05:00', '2021-11-18 17:42:45'),
-(2, 'Curabitur gravida nisi at nibh.', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', null, 'Clim', 'Carin', '2021-11-14 22:48:52', '2021-01-15 04:11:23'),
+(1, 'Curabitur gravida nisi at nibh.', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', null, 'Clim', 'Carin', '2021-11-14 22:48:52', '2021-01-15 04:11:23'),
 (1, 'Duis aliquam convallis nunc.', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.
 
 Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '#blue', 'Vonnie', 'Amery', '2021-07-07 06:30:56', '2021-06-21 07:33:19'),
@@ -138,13 +134,13 @@ Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quis
 Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.
 
 Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', null, 'Jackie', 'Emelda', '2021-11-20 09:06:53', '2021-06-29 21:11:43'),
-(2, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.', '#red', 'Judye', 'Hulda', '2022-01-31 02:12:17', '2021-11-13 04:25:33'),
+(1, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.', '#red', 'Judye', 'Hulda', '2022-01-31 02:12:17', '2021-11-13 04:25:33'),
 (1, 'Donec quis orci eget orci vehicula condimentum.', 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.
 
 In congue. Etiam justo. Etiam pretium iaculis justo.', null, 'Hana', 'Anabel', '2021-05-19 15:38:50', '2021-09-18 12:45:53'),
 (1, 'Pellentesque eget nunc.', 'Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', '#purple', 'Gil', 'Gerri', '2021-07-13 02:04:06', '2021-04-28 03:43:55'),
-(2, 'Nam dui.', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.', '#crimson', 'Peyton', 'Leena', '2021-01-09 14:46:57', '2021-10-20 07:05:55'),
-(2, 'Morbi a ipsum.', 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.
+(1, 'Nam dui.', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.', '#crimson', 'Peyton', 'Leena', '2021-01-09 14:46:57', '2021-10-20 07:05:55'),
+(1, 'Morbi a ipsum.', 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.
 
 Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.
 
@@ -158,12 +154,12 @@ Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspend
 
 Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.', null, 'Rachel', 'Maurise', '2021-11-05 23:17:06', '2021-06-02 11:12:17'),
 (1, 'Morbi non quam nec dui luctus rutrum.', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '#pink', 'Muriel', 'Ki', '2021-06-29 18:05:20', '2021-11-14 19:30:51'),
-(2, 'Phasellus in felis.', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.
+(1, 'Phasellus in felis.', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.
 
 Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.
 
 Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', '#orange', 'Emanuele', 'Frank', '2021-01-13 10:45:47', '2022-01-07 02:08:42'),
-(2, 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.', 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.
+(1, 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.', 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.
 
 Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', null, 'Arlen', 'Kelley', '2021-01-18 04:14:36', '2021-01-12 15:49:40'),
 (1, 'Nunc nisl.', 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.', '#orange', 'Brant', 'Rycca', '2021-10-24 18:34:37', '2021-09-24 11:55:07'),
