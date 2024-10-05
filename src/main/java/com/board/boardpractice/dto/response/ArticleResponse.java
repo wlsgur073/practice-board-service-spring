@@ -2,7 +2,6 @@ package com.board.boardpractice.dto.response;
 
 import com.board.boardpractice.dto.ArticleDto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public record ArticleResponse(
@@ -13,7 +12,7 @@ public record ArticleResponse(
         LocalDateTime createdAt,
         String email,
         String nickname
-) implements Serializable {
+) {
     /*
     * 컨트롤러에서만 사용할 DTO
     * 레이어별로 DTO를 분리시킴으로써, 각 레이어의 독립성 보장과 유연한 코드로의 확장 가능.
