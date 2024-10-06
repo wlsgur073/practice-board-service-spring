@@ -34,7 +34,7 @@ public class Article extends AuditingFields {
     @Setter
     private String hashtag;
 
-    @Setter @ManyToOne(optional = false) private UserAccount userAccount;
+    @Setter @ManyToOne(optional = false) @JoinColumn(name = "userId") private UserAccount userAccount;
 
     // 양방향 설정
     @ToString.Exclude
