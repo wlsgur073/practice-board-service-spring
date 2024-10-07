@@ -1,10 +1,12 @@
 package com.board.boardpractice.service;
 
 import com.board.boardpractice.domain.Article;
+import com.board.boardpractice.domain.UserAccount;
 import com.board.boardpractice.domain.constant.SearchType;
 import com.board.boardpractice.dto.ArticleDto;
 import com.board.boardpractice.dto.ArticleWithCommentsDto;
 import com.board.boardpractice.repository.ArticleRepository;
+import com.board.boardpractice.repository.UserAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ import java.util.Optional;
 @Service
 public class ArticleService {
 
+    private final UserAccountRepository userAccountRepository;
     private final ArticleRepository articleRepository;
 
     @Transactional(readOnly = true)
@@ -43,30 +45,33 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticleWithCommentsDto getArticle(long articleId) {
+    public ArticleWithCommentsDto getArticleWithComments(long articleId) {
         return articleRepository.findById(articleId)
                 .map(ArticleWithCommentsDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
     }
 
-    public void saveArticle(ArticleDto dto) {
-        articleRepository.save(dto.toEntity());
+    @Transactional(readOnly = true)
+    public ArticleDto getArticle(long articleId) {
+        return articleRepository.findById(articleId)
+                .map(ArticleDto::from)
+                .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
     }
 
-    public void updateArticle(ArticleDto dto) {
+    public void saveArticle(ArticleDto dto) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId()); // DB에서 UserAccount 참조
+        articleRepository.save(dto.toEntity(userAccount)); // 참조된 UserAccount로 Article 엔티티 생성 및 저장
+    }
+
+    public void updateArticle(Long articleId, ArticleDto dto) {
         try {
-            Article article = articleRepository.getReferenceById(dto.id());
+            Article article = articleRepository.getReferenceById(articleId);
 
-            // record는 getter, setter을 포함하며 getField()가 아닌 object.field 방식으로 get한다.
             if (dto.title() != null) { article.setTitle(dto.title()); }
-            if (dto.content() != null) { article.setTitle(dto.content()); }
-            article.setTitle(dto.hashtag());
-
-            // class level Transactional에 의해 method 단위로 Transaction이 묶여 있어서
-            // Transaction 끝날 때 영속성 컨텍스트는 해당 entity의 변경사항을 감지하고 update query를 실행 시킨다.
-            // 따라서 save할 필요없음
+            if (dto.content() != null) { article.setContent(dto.content()); }
+            article.setHashtag(dto.hashtag());
         } catch (EntityNotFoundException e) {
-            log.warn("게시글 업데이트 실패. 게시글을 찾을 수 없습니다. - dto: {}", dto);
+            log.warn("게시글 업데이트 실패. 게시글을 찾을 수 없습니다 - dto: {}", dto);
         }
     }
 
@@ -82,10 +87,12 @@ public class ArticleService {
         return articleRepository.findByHashtag(hashtag, pageable).map(ArticleDto::from);
     }
 
+    @Transactional(readOnly = true)
     public List<String> getHashtags() {
         return articleRepository.findAllDistinctHashtags();
     }
 
+    @Transactional(readOnly = true)
     public long getArticleCount() {
         return articleRepository.count();
     }
