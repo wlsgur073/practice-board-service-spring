@@ -269,7 +269,7 @@ class ArticleControllerTest {
         //given
         long articleId = 1L;
         ArticleRequest articleRequest = ArticleRequest.of("new title", "new content", "#NEW");
-        willDoNothing().given(articleService).updateArticle(articleId, any(ArticleDto.class));
+        willDoNothing().given(articleService).updateArticle(eq(articleId), any(ArticleDto.class));
 
         //when & then
         mvc.perform(
@@ -281,7 +281,7 @@ class ArticleControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/" + articleId))
                 .andExpect(redirectedUrl("/articles/" + articleId));
-        then(articleService).should().updateArticle(articleId, any(ArticleDto.class));
+        then(articleService).should().updateArticle(eq(articleId), any(ArticleDto.class));
     }
 
     @DisplayName("[view][POST] 게시글 삭제 - 정상 호출")
