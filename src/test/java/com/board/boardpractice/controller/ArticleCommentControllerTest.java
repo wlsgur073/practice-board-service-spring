@@ -1,12 +1,11 @@
 package com.board.boardpractice.controller;
 
-import com.board.boardpractice.config.SecurityConfig;
+import com.board.boardpractice.config.TestSecurityConfig;
 import com.board.boardpractice.dto.ArticleCommentDto;
 import com.board.boardpractice.dto.UserAccountDto;
 import com.board.boardpractice.dto.request.ArticleCommentRequest;
 import com.board.boardpractice.service.ArticleCommentService;
 import com.board.boardpractice.util.FormDataEncoder;
-import org.hibernate.Session;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View Controller - ArticleComment")
-@Import({SecurityConfig.class, FormDataEncoder.class})
+@Import({TestSecurityConfig.class, FormDataEncoder.class})
 @WebMvcTest(ArticleCommentController.class) // 해당 컨트롤러만 읽음 -> 가벼워짐
 class ArticleCommentControllerTest {
 
@@ -40,6 +41,7 @@ class ArticleCommentControllerTest {
         this.formDataEncoder = formDataEncoder;
     }
 
+    @WithUserDetails(value = "userIdForTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 댓글 등록 - 정상 호출")
     @Test
     void givenArticleCommentInfo_whenRequesting_thenSavesNewArticleComment() throws Exception {
@@ -61,13 +63,15 @@ class ArticleCommentControllerTest {
         then(articleCommentService).should().saveArticleComment(any(ArticleCommentDto.class));
     }
 
+    @WithUserDetails(value = "userIdForTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 댓글 삭제 - 정상 호출")
     @Test
     void givenArticleCommentInfoToDelete_whenRequesting_thenDeletesArticleComment() throws Exception {
         //given
         long articleId = 1L;
         long articleCommentId = 1L;
-        willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId);
+        String userId = "userIdForTest";
+        willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId, userId);
 
         //when & then
         mvc.perform(
@@ -79,6 +83,6 @@ class ArticleCommentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/" + articleId))
                 .andExpect(redirectedUrl("/articles/" + articleId));
-        then(articleCommentService).should().deleteArticleComment(articleCommentId);
+        then(articleCommentService).should().deleteArticleComment(articleCommentId, userId);
     }
 }
