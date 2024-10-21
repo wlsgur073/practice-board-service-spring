@@ -1,11 +1,11 @@
 -- 테스트 계정
 -- TODO: 테스트용이지만 비밀번호가 노출된 데이터 세팅. 개선하는 것이 좋을 지 고민해 보자.
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
-('tester1', 'asdf1234', 'tester1', 'tester1@mail.com', 'I am tester1.', now(), 'tester1', now(), 'tester1')
+('tester1', '{noop}asdf1234', 'tester1', 'tester1@mail.com', 'I am tester1.', now(), 'tester1', now(), 'tester1')
 ;
 
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
-    ('tester2', 'asdf1234', 'tester2', 'tester2@mail.com', 'I am tester2.', now(), 'tester2', now(), 'tester2')
+    ('tester2', '{noop}asdf1234', 'tester2', 'tester2@mail.com', 'I am tester2.', now(), 'tester2', now(), 'tester2')
 ;
 
 -- 개시글 123개
