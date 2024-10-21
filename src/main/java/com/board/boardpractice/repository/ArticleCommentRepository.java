@@ -21,6 +21,8 @@ public interface ArticleCommentRepository extends
     // 게시글 id에 있는 댓글 리스트를 조회하기 위해서 method naming을 다음과 같이 upderscore 방식으로 표현한다.
     List<ArticleComment> findByArticle_Id(Long articleId);
 
+    void deleteByIdAndUserAccount_UserId(Long articleCommentId, String userId);
+
     @Override
     default void customize(QuerydslBindings bindings, QArticleComment root) {
         bindings.excludeUnlistedProperties(true);

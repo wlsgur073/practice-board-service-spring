@@ -33,6 +33,8 @@ public interface ArticleRepository extends
 
     Page<Article> findByHashtag(String hashtag, Pageable pageable); // 해시태그는 정확한 검색으로 설정
 
+    void deleteByIdAndUserAccount_UserId(Long articleId, String userId);
+
     @Override
     default void customize(QuerydslBindings bindings, QArticle root) {
         bindings.excludeUnlistedProperties(true); // 선택적으로 검색이 가능하게 exclude

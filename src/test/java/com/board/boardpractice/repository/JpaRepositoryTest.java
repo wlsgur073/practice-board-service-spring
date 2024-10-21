@@ -1,28 +1,26 @@
 package com.board.boardpractice.repository;
 
-import com.board.boardpractice.config.JpaConfig;
 import com.board.boardpractice.domain.Article;
 import com.board.boardpractice.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/*
-* @DataJpaTest에는 transactional 들어가 있음.
-* 자동으로 h2 테스트 db를 실행시킨다. 따라서, application.yml에서 아무리 테스트 db 설정을 해도 무시된다.
-* */
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 수동으로 테스트DB 설정 가능
-//@ActiveProfiles("testdb")
+
 @DataJpaTest
 @DisplayName("JPA 연결 테스트")
-@Import(JpaConfig.class) // 이게 없으면 spring 컨테이너의 해당 bean을 읽을 수 없음
+@Import(JpaRepositoryTest.TestJpaConfig.class) // spring security 적용 이후 JpaAuditing 문제로 test용 auditing 으로 변경
 class JpaRepositoryTest {
 
     // JUnit5에서는 Autowrired가 들어가 있다.
@@ -55,7 +53,7 @@ class JpaRepositoryTest {
 
     @DisplayName("insert test")
     @Test
-    void givenTestData_whenInserting_thenWorksFied() {
+    void givenTestData_whenInserting_thenWorksFiled() {
         // Given
         long previousCount = articleRepository.count();
         UserAccount userAccount = userAccountRepository.save(UserAccount.of("newTester", "pw", null, null, null));
@@ -98,5 +96,14 @@ class JpaRepositoryTest {
         // Then
         assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
         assertThat(articleCommentRepository.count()).isEqualTo(previousArticleCommentCount - deletedCommentSize);
+    }
+
+    @EnableJpaAuditing
+    @TestConfiguration
+    public static class TestJpaConfig{
+        @Bean
+        public AuditorAware<String> auditorAware() {
+            return () -> Optional.of("test");
+        }
     }
 }
