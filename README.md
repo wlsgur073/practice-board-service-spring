@@ -9,7 +9,7 @@ This project is a simple board application built using **Spring Boot 3.3.1**, **
 - **QueryDSL** for tyape-safe queries
 - **Spring Security** for authentication and authorization
 - **Thymeleaf** for server-side rendering of web pages
-- **H2** database for development, and **MySQL** for production
+- **H2** database for development, and **MySQL 8.2.0** for production
 
 ## Requirements
 
